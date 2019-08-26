@@ -1,0 +1,23 @@
+{
+  "name": "officernd-oauth-example",
+  "version": "1.0.0",
+  "description": "An example nodejs application showcasing how to use OfficeRnD oauth server",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "passport": "^0.4.0",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0",
+    "passport-oauth2": "^1.5.0",
+    "tsc": "^1.20150623.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Andrew (andrew@officernd.com)",
+  "license": "ISC"
+}

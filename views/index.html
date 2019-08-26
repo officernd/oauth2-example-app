@@ -1,0 +1,63 @@
+<a id="connectA" onclick="onConnectClicked()"
+    style="text-decoration-line: underline;color: blue;cursor: pointer;">Connect</a>
+<a id="refreshA" onclick="onRefreshClicked()"
+    style="text-decoration-line: underline;color: blue;cursor: pointer;display: none">Refresh tokens</a>
+
+<div>
+    <br />Status: <span id="statusSpan">Not Connected</span>
+    <br />Access token: <span id="accessTokenSpan"></span>
+    <br />Refresh token: <span id="refreshTokenSpan"></span>
+    <br />Expirest at: <span id="expiresAtSpan"></span>
+</div>
+
+<div>
+    <a id="getMembersA" onclick="getMembersClicked()" style="text-decoration-line: underline;color: blue;cursor: pointer;display: none">Get
+        members</a>
+    Members: <span id="membersSpan"></span>
+</div>
+
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    function onConnectClicked() {
+        var win = window.open('http://localhost:3000/connect', 'OfficeRnD Authentication', "width=800, height=600");
+        var timer = setInterval(function () {
+            if (win.closed) {
+                clearInterval(timer);
+                fillTokens();
+            }
+        }, 1000);
+    }
+
+    function getMembersClicked() {
+        $.get('/members', function (responsePayload, status) {
+            var members = responsePayload;
+            var memberNames = '';
+            members.forEach((m) => {
+                memberNames += m.name + '(' + m.email + '); ';
+            });
+            $("#membersSpan").text(memberNames);
+        });
+    }
+
+    function onRefreshClicked() {
+        $.get('/refresh', function (responsePayload, status) {
+            fillTokens();
+        });
+    }
+
+    function fillTokens() {
+        $.get('/status', function (responsePayload, status) {
+            $("#statusSpan").text(responsePayload.connected ? 'Connected to ' + responsePayload.orgSlug  : 'Not connected');
+            $("#accessTokenSpan").text(responsePayload.accessToken);
+            $("#refreshTokenSpan").text(responsePayload.refreshToken);
+            $("#expiresAtSpan").text(responsePayload.expiresAt);
+            if (responsePayload.connected) {
+                $('#connectA').hide();
+                $('#getMembersA').show();
+                $('#refreshA').show();
+            }
+        });
+    }
+
+    fillTokens();
+</script>
