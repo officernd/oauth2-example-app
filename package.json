@@ -4,6 +4,7 @@
   "description": "An example nodejs application showcasing how to use OfficeRnD oauth server",
   "main": "server.js",
   "dependencies": {
+    "@types/node": "^12.7.2",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
